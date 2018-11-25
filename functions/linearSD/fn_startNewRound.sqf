@@ -1,0 +1,52 @@
+#include "component.hpp"
+
+params [["_activeSectorID",-1]];
+
+GVAR(roundNumber) = (missionNamespace getVariable [QGVAR(roundNumber),0]) + 1;
+publicVariable QGVAR(roundNumber);
+
+[_activeSectorID] call FUNC(setActiveSectors);
+
+private _activeSectors = GVAR(sectorTriggers) select _activeSectorID;
+private _defenderSector0 = _activeSectors select 0;
+
+private _defendingSide = _defenderSector0 getVariable [QEGVAR(sectors,currentOwner),sideUnknown];
+private _attackingSide = [WEST,EAST] select (_defendingSide == WEST);
+
+private _attackDirection = [-GVAR(bluforDirection),GVAR(bluforDirection)] select (_defendingSide == WEST);
+
+private _attackerSectors =  GVAR(sectorTriggers) select (_activeSectorID - _attackDirection);
+private _attackerSector0 = _attackerSectors select 0;
+
+missionNamespace setVariable [QGVAR(sectorsWest),[_attackerSectors,_activeSectors] select (_defendingSide == WEST),true];
+missionNamespace setVariable [QGVAR(sectorsEast),[_attackerSectors,_activeSectors] select (_defendingSide == EAST),true];
+
+{
+    _respawnMarker = ["respawn_west","respawn_east"] select _forEachIndex;
+    _sector = [_attackerSector0,_defenderSector0] select (_x == _defendingSide);
+    _respawnPos = (getPos _sector) findEmptyPosition [0,100,"B_Soldier_F"];
+    if (count _respawnPos == 0) then {_respawnPos = getPos _sector};
+
+    _respawnMarker setMarkerPos _respawnPos;
+} forEach [WEST,EAST];
+
+
+// don't respawn players in first round
+// don't start preparation time in first round (is handled by mission setup instead)
+if (GVAR(roundNumber) > 1) then {
+    [{[] remoteExec [QFUNC(respawnPlayer),0,false]},[],5] call CBA_fnc_waitAndExecute;
+    missionNamespace setVariable [QGVAR(roundInProgress),false,true];
+    [["PREPARATION_TIME", 0] call BIS_fnc_getParamValue,{missionNamespace setVariable [QGVAR(roundInProgress),true,true]}] call EFUNC(missionSetup,startPreparationTime);
+
+} else {
+    {
+        [{
+            _respawnMarker = ["respawn_west","respawn_east"] select (side _this == EAST);
+            _pos = (getMarkerPos _respawnMarker) findEmptyPosition [0,30,"B_Soldier_F"];
+            if (_pos isEqualTo []) then {_pos = getMarkerPos _respawnMarker};
+            [_this,_pos] remoteExec [QEFUNC(common,teleport),_this,false];
+        },_x,random 3] call CBA_fnc_waitAndExecute;
+    } forEach playableUnits;
+
+    [{missionNamespace getVariable ["GRAD_MISSIONSTARTED",false]},{missionNamespace setVariable [QGVAR(roundInProgress),true,true]},[]] call CBA_fnc_waitUntilAndExecute;
+};
