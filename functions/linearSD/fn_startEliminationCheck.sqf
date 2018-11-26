@@ -36,7 +36,7 @@ if (_mode == "PRECHECK") then {
             _winner = [WEST,EAST] select (_side == WEST);
             _isLastSector = [GVAR(activeSectorID),_winner] call FUNC(isLastSector);
             _sideDisplayName = [_side] call EFUNC(common,getSideDisplayName);
-            [format ["%1 eliminated!"],_winner,_isLastSector] call FUNC(endRound);
+            [format ["%1 eliminated!",_sideDisplayName],_winner,_isLastSector] call FUNC(endRound);
 
             [_handle] call CBA_fnc_removePerFrameHandler;
             [_side,"PRECHECK"] call FUNC(startEliminationCheck);

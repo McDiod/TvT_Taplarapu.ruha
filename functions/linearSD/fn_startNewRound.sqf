@@ -40,9 +40,14 @@ if (GVAR(roundNumber) > 1) then {
 
     // wait 10s
     [{
+        _attackingSide = [WEST,EAST] select (GVAR(defendingSide) == WEST);
+        _roundText = format ["Round %1",GVAR(roundNumber)];
+        [_roundText,"You are attacking.","seize_ca"] remoteExec [QFUNC(dynamicText),_attackingSide,false];
+        [_roundText,"You are defending.","defend_ca"] remoteExec [QFUNC(dynamicText),GVAR(defendingSide),false];
+
         [["PREPARATION_TIME", 0] call BIS_fnc_getParamValue,{
-            missionNamespace setVariable [QGVAR(roundInProgress),true,true];
             missionNamespace setVariable [QGVAR(roundTimeLeft),GVAR(roundLength),true];
+            missionNamespace setVariable [QGVAR(roundInProgress),true,true];
         }] call EFUNC(missionSetup,startPreparationTime);
     },[],10] call CBA_fnc_waitAndExecute;
 
@@ -55,9 +60,9 @@ if (GVAR(roundNumber) > 1) then {
             [_this,_pos] remoteExec [QEFUNC(common,teleport),_this,false];
         },_x,random 3] call CBA_fnc_waitAndExecute;
     } forEach playableUnits;
-    
+
     [{missionNamespace getVariable ["GRAD_MISSIONSTARTED",false]},{
-        missionNamespace setVariable [QGVAR(roundInProgress),true,true];
         missionNamespace setVariable [QGVAR(roundTimeLeft),GVAR(roundLength),true];
+        missionNamespace setVariable [QGVAR(roundInProgress),true,true];
     },[]] call CBA_fnc_waitUntilAndExecute;
 };

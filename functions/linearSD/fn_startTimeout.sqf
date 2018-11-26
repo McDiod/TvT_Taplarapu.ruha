@@ -6,12 +6,16 @@ params [["_start",true]];
 
     if (!GVAR(roundInProgress)) exitWith {};
 
-    GVAR(roundTimeLeft) = GVAR(roundTimeLeft) - 1;
+    GVAR(roundTimeLeft) = (GVAR(roundTimeLeft) - 1) max 0;
     publicVariable QGVAR(roundTimeLeft);
 
     if (GVAR(roundTimeLeft) == 0) exitWith {
-        // fn_endRound sets GVAR(roundInProgress) to false
-        ["Sectors defended!",GVAR(defendingSide)] call FUNC(endRound);
+
+        // don't end round while a sector is being captured
+        if !([] call FUNC(activeSectorBeingCaptured)) then {
+            // fn_endRound sets GVAR(roundInProgress) to false
+            ["Sectors defended!",GVAR(defendingSide)] call FUNC(endRound);
+        };
     };
 
     if (GVAR(roundTimeLeft) in [1800,900,600,300,60]) then {

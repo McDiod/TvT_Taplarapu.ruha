@@ -1,7 +1,9 @@
 class grad_linearSD {
     class linearSD {
+        class activeSectorBeingCaptured {};
         class addTeleportAction {};
         class createSector {};
+        class dynamicText {};
         class endRound {};
         class isLastSector {};
         class onPlayerKilled {};
