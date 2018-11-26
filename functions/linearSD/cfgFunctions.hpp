@@ -3,9 +3,11 @@ class grad_linearSD {
         class addTeleportAction {};
         class createSector {};
         class endRound {};
+        class isLastSector {};
         class onSectorCaptured {};
         class respawnPlayer {};
         class setActiveSectors {};
+        class startEliminationCheck {};
         class startLinearSD {};
         class startNewRound {};
         class startTimeout {};

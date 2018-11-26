@@ -25,4 +25,6 @@ if (isServer) then {
 
     [_startingSectorID] call FUNC(startNewRound);
     [] call FUNC(startTimeout);
+    [WEST] call FUNC(startEliminationCheck);
+    [EAST] call FUNC(startEliminationCheck);
 };
