@@ -20,9 +20,6 @@ if (!isServer) then {[] call GRAD_replay_fnc_init};
         }, []] call CBA_fnc_waitUntilAndExecute;
     };
 
-    setViewDistance 3000;
-    setObjectViewDistance 2500;
-
     if (hasInterface) then {
 
     };

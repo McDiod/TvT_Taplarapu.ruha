@@ -1,4 +1,6 @@
-if (missionNamespace getVariable ["grad_linearSD_linearSDActive",false]) exitWith {};
+if (missionNamespace getVariable ["grad_linearSD_linearSDActive",false]) exitWith {
+    [] call grad_linearSD_fnc_onPlayerKilled;
+};
 
 //WAVE RESPAWN
 if (([missionConfigFile >> "missionsettings","waveRespawnEnabled",0] call BIS_fnc_returnConfigEntry) == 1) then {

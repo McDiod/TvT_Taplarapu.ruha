@@ -4,6 +4,7 @@ class grad_linearSD {
         class createSector {};
         class endRound {};
         class isLastSector {};
+        class onPlayerKilled {};
         class onSectorCaptured {};
         class respawnPlayer {};
         class setActiveSectors {};
