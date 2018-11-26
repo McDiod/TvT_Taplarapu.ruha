@@ -18,19 +18,17 @@ if (_winner != GVAR(defendingSide)) then {
 };
 
 
-
-systemChat _endMessage;
-
-
-
 private _winnerDisplayName = [_winner] call EFUNC(common,getSideDisplayName);
 if (_isLastSector) then {
     ["",format ["%1 wins!",_winnerDisplayName],[_winner],[]] call EFUNC(endings,endMissionServer);
 
-} else {
-    private _winMessage = format ["%1 wins the round.",_winnerDisplayName];
-    systemChat _winMessage;
+    } else {
+        private _messagePic = format ["\a3\ui_f\data\gui\cfg\gametypes\%1.paa",["seize_ca","defend_ca"] select (_winner == GVAR(defendingSide))];
+        private _winMessage = format ["%1 wins the round.",_winnerDisplayName];
+        private _messageText = format ["<img size= '1' style='vertical-align:middle' shadow='false' image='%1'/><br/><t size='.9' color='#FFFFFF'>%2<br/>%3</t>",_messagePic,_endMessage,_winMessage];
+        private _yCoord = safeZoneY + (safeZoneH * 0.4);
+        [_messageText,0,_yCoord,4,2] remoteExec ["BIS_fnc_dynamicText",0,false];
 
-    private _nextActiveSector = GVAR(activeSectorID) + GVAR(opforDirection) * ([-1,1] select (_winner == EAST));
-    [_nextActiveSector] call FUNC(startNewRound);
+        private _nextActiveSector = GVAR(activeSectorID) + GVAR(opforDirection) * ([-1,1] select (_winner == EAST));
+        [FUNC(startNewRound),[_nextActiveSector],5] call CBA_fnc_waitAndExecute;
 };

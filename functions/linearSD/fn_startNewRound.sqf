@@ -34,12 +34,17 @@ missionNamespace setVariable [QGVAR(sectorsEast),[_attackerSectors,_activeSector
 // don't respawn players in first round
 // don't start preparation time in first round (is handled by mission setup instead)
 if (GVAR(roundNumber) > 1) then {
+
+    // wait 5s
     [{[] remoteExec [QFUNC(respawnPlayer),0,false]},[],5] call CBA_fnc_waitAndExecute;
 
-    [["PREPARATION_TIME", 0] call BIS_fnc_getParamValue,{
-        missionNamespace setVariable [QGVAR(roundInProgress),true,true];
-        missionNamespace setVariable [QGVAR(roundTimeLeft),GVAR(roundLength),true];
-    }] call EFUNC(missionSetup,startPreparationTime);
+    // wait 10s
+    [{
+        [["PREPARATION_TIME", 0] call BIS_fnc_getParamValue,{
+            missionNamespace setVariable [QGVAR(roundInProgress),true,true];
+            missionNamespace setVariable [QGVAR(roundTimeLeft),GVAR(roundLength),true];
+        }] call EFUNC(missionSetup,startPreparationTime);
+    },[],10] call CBA_fnc_waitAndExecute;
 
 } else {
     {
@@ -50,7 +55,7 @@ if (GVAR(roundNumber) > 1) then {
             [_this,_pos] remoteExec [QEFUNC(common,teleport),_this,false];
         },_x,random 3] call CBA_fnc_waitAndExecute;
     } forEach playableUnits;
-
+    
     [{missionNamespace getVariable ["GRAD_MISSIONSTARTED",false]},{
         missionNamespace setVariable [QGVAR(roundInProgress),true,true];
         missionNamespace setVariable [QGVAR(roundTimeLeft),GVAR(roundLength),true];
