@@ -8,5 +8,6 @@ class grad_linearSD {
         class setActiveSectors {};
         class startLinearSD {};
         class startNewRound {};
+        class startTimeout {};
     };
 };

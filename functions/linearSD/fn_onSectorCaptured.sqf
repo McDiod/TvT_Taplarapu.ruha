@@ -2,6 +2,8 @@
 
 params [["_sector",objNull],["_newOwner",sideUnknown],["_oldOwner",sideUnknown]];
 
+if (!isServer) exitWith {};
+
 private _sectorID = _sector getVariable [QEGVAR(sectors,sectorData),-1];
 if (_sectorID < 0) exitWith {ERROR("sectorID undefined")};
 

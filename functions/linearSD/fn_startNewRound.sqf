@@ -10,20 +10,20 @@ publicVariable QGVAR(roundNumber);
 private _activeSectors = GVAR(sectorTriggers) select _activeSectorID;
 private _defenderSector0 = _activeSectors select 0;
 
-private _defendingSide = _defenderSector0 getVariable [QEGVAR(sectors,currentOwner),sideUnknown];
-private _attackingSide = [WEST,EAST] select (_defendingSide == WEST);
+GVAR(defendingSide) = _defenderSector0 getVariable [QEGVAR(sectors,currentOwner),sideUnknown];
+private _attackingSide = [WEST,EAST] select (GVAR(defendingSide) == WEST);
 
-private _attackDirection = [-GVAR(bluforDirection),GVAR(bluforDirection)] select (_defendingSide == WEST);
+private _attackDirection = [-GVAR(opforDirection),GVAR(opforDirection)] select (GVAR(defendingSide) == WEST);
 
 private _attackerSectors =  GVAR(sectorTriggers) select (_activeSectorID - _attackDirection);
 private _attackerSector0 = _attackerSectors select 0;
 
-missionNamespace setVariable [QGVAR(sectorsWest),[_attackerSectors,_activeSectors] select (_defendingSide == WEST),true];
-missionNamespace setVariable [QGVAR(sectorsEast),[_attackerSectors,_activeSectors] select (_defendingSide == EAST),true];
+missionNamespace setVariable [QGVAR(sectorsWest),[_attackerSectors,_activeSectors] select (GVAR(defendingSide) == WEST),true];
+missionNamespace setVariable [QGVAR(sectorsEast),[_attackerSectors,_activeSectors] select (GVAR(defendingSide) == EAST),true];
 
 {
     _respawnMarker = ["respawn_west","respawn_east"] select _forEachIndex;
-    _sector = [_attackerSector0,_defenderSector0] select (_x == _defendingSide);
+    _sector = [_attackerSector0,_defenderSector0] select (_x == GVAR(defendingSide));
     _respawnPos = (getPos _sector) findEmptyPosition [0,100,"B_Soldier_F"];
     if (count _respawnPos == 0) then {_respawnPos = getPos _sector};
 
@@ -35,8 +35,11 @@ missionNamespace setVariable [QGVAR(sectorsEast),[_attackerSectors,_activeSector
 // don't start preparation time in first round (is handled by mission setup instead)
 if (GVAR(roundNumber) > 1) then {
     [{[] remoteExec [QFUNC(respawnPlayer),0,false]},[],5] call CBA_fnc_waitAndExecute;
-    missionNamespace setVariable [QGVAR(roundInProgress),false,true];
-    [["PREPARATION_TIME", 0] call BIS_fnc_getParamValue,{missionNamespace setVariable [QGVAR(roundInProgress),true,true]}] call EFUNC(missionSetup,startPreparationTime);
+
+    [["PREPARATION_TIME", 0] call BIS_fnc_getParamValue,{
+        missionNamespace setVariable [QGVAR(roundInProgress),true,true];
+        missionNamespace setVariable [QGVAR(roundTimeLeft),GVAR(roundLength),true];
+    }] call EFUNC(missionSetup,startPreparationTime);
 
 } else {
     {
@@ -48,5 +51,8 @@ if (GVAR(roundNumber) > 1) then {
         },_x,random 3] call CBA_fnc_waitAndExecute;
     } forEach playableUnits;
 
-    [{missionNamespace getVariable ["GRAD_MISSIONSTARTED",false]},{missionNamespace setVariable [QGVAR(roundInProgress),true,true]},[]] call CBA_fnc_waitUntilAndExecute;
+    [{missionNamespace getVariable ["GRAD_MISSIONSTARTED",false]},{
+        missionNamespace setVariable [QGVAR(roundInProgress),true,true];
+        missionNamespace setVariable [QGVAR(roundTimeLeft),GVAR(roundLength),true];
+    },[]] call CBA_fnc_waitUntilAndExecute;
 };
