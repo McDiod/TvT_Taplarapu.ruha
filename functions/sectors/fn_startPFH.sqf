@@ -5,8 +5,13 @@ INFO_1("PFH for %1 starting.",_trigger getVariable "grad_sectors_sectorName");
 
 [_trigger] call grad_sectors_fnc_updateMarker;
 
+private _previousSideStrengths = +(_trigger getVariable QGVAR(sideStrenghts));
+private _previousSideStrengthsDiff = _previousSideStrengths apply {0};
+
 [{
-    params ["_trigger","_handle"];
+    params ["_args","_handle"];
+    _args params ["_trigger","_previousSideStrengths","_previousSideStrengthsDiff"];
+
     if (isNull _trigger) exitWith {
         [_handle] call CBA_fnc_removePerFrameHandler;
         ERROR("A sector trigger is null. Exiting PFH.");
@@ -25,21 +30,43 @@ INFO_1("PFH for %1 starting.",_trigger getVariable "grad_sectors_sectorName");
     // sector blocked by fn_blockSector
     if (_trigger getVariable [QGVAR(blocked),false]) exitWith {};
 
-    _countTotal = (count _list) - (sideLogic countSide _list) - (CIVILIAN countSide _list);
-    if (_countTotal == 0) exitWith {};
+    _newOwner = [_trigger] call FUNC(evaluateSector);
 
-    _captureSides = _trigger getVariable "grad_sectors_captureSides";
-    _countWest = if (WEST in _captureSides) then {WEST countSide _list} else {0};
-    _countEast = if (EAST in _captureSides) then {EAST countSide _list} else {0};
-    _countIndep = if (INDEPENDENT in _captureSides) then {INDEPENDENT countSide _list} else {0};
+    // notification if new side is taking control
+    if (_trigger getVariable QGVAR(notifyTakingControl)) then {
+        _sideStrengths = _trigger getVariable QGVAR(sideStrenghts);
 
-    (_trigger getVariable "grad_sectors_sideStrenghts") params ["_strengthWest","_strengthEast","_strengthIndep"];
-    _strengthWest = (_strengthWest + (_countWest/_countTotal - 0.5)/15) max 0 min 1;
-    _strengthEast = (_strengthEast + (_countEast/_countTotal - 0.5)/15) max 0 min 1;
-    _strengthIndep = (_strengthIndep + (_countIndep/_countTotal - 0.5)/15) max 0 min 1;
-    _trigger setVariable ["grad_sectors_sideStrenghts",[_strengthWest,_strengthEast,_strengthIndep]];
+        _captureSides = _trigger getVariable [QGVAR(captureSides),[]];
+        {
+            _thisSide = _captureSides select _forEachIndex;
 
-    _newOwner = if (_strengthWest == 1) then {WEST} else {if (_strengthEast == 1) then {EAST} else {if (_strengthIndep == 1) then {INDEPENDENT} else {_oldOwner}}};
+            if (_thisSide != _oldOwner) then {
+                _previousDiff = _previousSideStrengthsDiff select _forEachIndex;
+                _thisDiff = (_sideStrengths select _forEachIndex) - _x;
+
+                if (_thisDiff > 0 && {_previousDiff <= 0}) then {
+                    _sectorName = _trigger getVariable "grad_sectors_sectorName";
+                    if (_sectorName == "") then {_sectorName = "a sector"};
+
+                    _sideTakingControlName = [_captureSides select _forEachIndex] call EFUNC(common,getSideDisplayName);
+                    ["grad_notification1",["SECTOR CAPTURING",format ["%1 is taking control of %2.",_sideTakingControlName,_sectorName]]] remoteExec ["bis_fnc_showNotification",0,false];
+                };
+
+                if (_thisDiff <= 0 && {_previousDiff > 0}) then {
+                    _sectorName = _trigger getVariable "grad_sectors_sectorName";
+                    if (_sectorName == "") then {_sectorName = "a sector"};
+
+                    ["grad_notification1",["SECTOR CAPTURING",format ["%1 regained control of %2.",[_oldOwner] call EFUNC(common,getSideDisplayName),_sectorName]]] remoteExec ["bis_fnc_showNotification",0,false];
+                };
+
+                _previousSideStrengthsDiff set [_forEachIndex,_thisDiff];
+            };
+        } forEach _previousSideStrengths;
+
+        _previousSideStrengths resize 0;
+        _previousSideStrengths append _sideStrengths;
+    };
+
 
     if (_newOwner != _oldOwner) then {
         _trigger setVariable ["grad_sectors_previousOwner",_oldOwner];
@@ -49,11 +76,7 @@ INFO_1("PFH for %1 starting.",_trigger getVariable "grad_sectors_sectorName");
 
         _sectorName = _trigger getVariable "grad_sectors_sectorName";
         if (_sectorName == "") then {_sectorName = "A sector"};
-        _ownerName = switch (_newOwner) do {
-            case (WEST): {"BLUFOR"};
-            case (EAST): {"OPFOR"};
-            case (INDEPENDENT): {"INDEPENDENT"};
-        };
+        _ownerName = [_newOwner] call EFUNC(common,getSideDisplayName);
 
         ["grad_notification1",["SECTOR CAPTURED",format ["%1 was captured by %2.",_sectorName,_ownerName]]] remoteExec ["bis_fnc_showNotification",0,false];
 
@@ -69,4 +92,4 @@ INFO_1("PFH for %1 starting.",_trigger getVariable "grad_sectors_sectorName");
         if (_trigger getVariable "grad_sectors_lockAfterCapture") exitWith {[_handle] call CBA_fnc_removePerFrameHandler};
     };
 
-},1,_this select 0] call CBA_fnc_addPerFrameHandler;
+},1,[_this select 0,_previousSideStrengths,_previousSideStrengthsDiff]] call CBA_fnc_addPerFrameHandler;

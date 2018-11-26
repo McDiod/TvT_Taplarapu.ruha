@@ -1,6 +1,6 @@
 #include "component.hpp"
 
-params ["_trigger","_sectorName","_pointsForCapture","_pointsPerSecond","_lockAfterCapture","_captureSides","_owner","_onSectorCaptured","_sectorData"];
+params ["_trigger","_sectorName","_pointsForCapture","_pointsPerSecond","_lockAfterCapture","_captureSides","_owner","_notifyTakingControl","_onSectorCaptured","_sectorData","_captureMode"];
 
 
 _trigger setTriggerActivation ["ANY", "PRESENT", true];
@@ -12,6 +12,8 @@ _trigger setVariable [QGVAR(pointsForCapture),_pointsForCapture];
 _trigger setVariable [QGVAR(pointsPerSecond),_pointsPerSecond];
 _trigger setVariable [QGVAR(lockAfterCapture),_lockAfterCapture];
 _trigger setVariable [QGVAR(captureSides),_captureSides];
-_trigger setVariable [QGVAR(sideStrenghts),[0,0,0]];
+_trigger setVariable [QGVAR(sideStrenghts),_captureSides apply {0}];
+_trigger setVariable [QGVAR(notifyTakingControl),_notifyTakingControl];
 _trigger setVariable [QGVAR(onSectorCaptured),_onSectorCaptured];
 _trigger setVariable [QGVAR(sectorData),_sectorData];
+_trigger setVariable [QGVAR(captureMode),_captureMode];

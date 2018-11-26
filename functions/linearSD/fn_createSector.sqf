@@ -2,10 +2,10 @@
 
 if (!isServer) exitWith {};
 
-params [["_logic",objNull],["_sectorName","UNKNOWN SECTOR"],["_owner",sideUnknown],["_id",-1]];
+params [["_logic",objNull],["_sectorName","UNKNOWN SECTOR"],["_owner",sideUnknown],["_id",-1],["_notifyTakingControl",true],["_captureTime",60]];
 
 if !(_logic isKindOf "LocationArea_F") exitWith {ERROR_1("%1 is not an area logic.",_logic)};
-[_logic,_sectorName,0,0,false,[WEST,EAST,INDEPENDENT],_owner,FUNC(onSectorCaptured),_id] call EFUNC(sectors,createSector);
+[_logic,_sectorName,0,0,false,[WEST,EAST,INDEPENDENT],_owner,_notifyTakingControl,FUNC(onSectorCaptured),_id,[1,_captureTime]] call EFUNC(sectors,createSector);
 
 if (isNil QGVAR(sectorTriggers)) then {GVAR(sectorTriggers) = []};
 

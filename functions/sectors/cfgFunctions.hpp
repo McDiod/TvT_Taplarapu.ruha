@@ -4,6 +4,7 @@ class grad_sectors {
         class createMarker {};
         class createSector {};
         class createTasks {};
+        class evaluateSector {};
         class initTrigger {};
         class startPFH {};
         class updateMarker {};
