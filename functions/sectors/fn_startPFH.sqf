@@ -5,20 +5,16 @@ INFO_1("PFH for %1 starting.",_trigger getVariable "grad_sectors_sectorName");
 
 [_trigger] call grad_sectors_fnc_updateMarker;
 
-private _previousSideStrengths = +(_trigger getVariable QGVAR(sideStrenghts));
-private _previousSideStrengthsDiff = _previousSideStrengths apply {0};
+private _previousCapturingSide = _trigger getVariable QGVAR(currentOwner);
 
 [{
     params ["_args","_handle"];
-    _args params ["_trigger","_previousSideStrengths","_previousSideStrengthsDiff"];
+    _args params ["_trigger","_previousCapturingSide"];
 
     if (isNull _trigger) exitWith {
         [_handle] call CBA_fnc_removePerFrameHandler;
         ERROR("A sector trigger is null. Exiting PFH.");
     };
-
-    _list = list _trigger;
-    if (isNil "_list") exitWith {};
 
     _oldOwner = _trigger getVariable "grad_sectors_currentOwner";
     _pps = _trigger getVariable "grad_sectors_pointsPerSecond";
@@ -30,42 +26,14 @@ private _previousSideStrengthsDiff = _previousSideStrengths apply {0};
     // sector blocked by fn_blockSector
     if (_trigger getVariable [QGVAR(blocked),false]) exitWith {};
 
-    _newOwner = [_trigger] call FUNC(evaluateSector);
+    ([_trigger] call FUNC(evaluateSector)) params ["_newOwner","_capturingSide"];
 
     // notification if new side is taking control
     if (_trigger getVariable QGVAR(notifyTakingControl)) then {
-        _sideStrengths = _trigger getVariable QGVAR(sideStrenghts);
-
-        _captureSides = _trigger getVariable [QGVAR(captureSides),[]];
-        {
-            _thisSide = _captureSides select _forEachIndex;
-
-            if (_thisSide != _oldOwner) then {
-                _previousDiff = _previousSideStrengthsDiff select _forEachIndex;
-                _thisDiff = (_sideStrengths select _forEachIndex) - _x;
-
-                if (_thisDiff > 0 && {_previousDiff <= 0}) then {
-                    _sectorName = _trigger getVariable "grad_sectors_sectorName";
-                    if (_sectorName == "") then {_sectorName = "a sector"};
-
-                    _sideTakingControlName = [_captureSides select _forEachIndex] call EFUNC(common,getSideDisplayName);
-                    ["grad_notification1",["SECTOR CAPTURING",format ["%1 is taking control of %2.",_sideTakingControlName,_sectorName]]] remoteExec ["bis_fnc_showNotification",0,false];
-                };
-
-                if (_thisDiff <= 0 && {_previousDiff > 0}) then {
-                    _sectorName = _trigger getVariable "grad_sectors_sectorName";
-                    if (_sectorName == "") then {_sectorName = "a sector"};
-
-                    ["grad_notification1",["SECTOR CAPTURING",format ["%1 regained control of %2.",[_oldOwner] call EFUNC(common,getSideDisplayName),_sectorName]]] remoteExec ["bis_fnc_showNotification",0,false];
-                };
-
-                _previousSideStrengthsDiff set [_forEachIndex,_thisDiff];
-            };
-        } forEach _previousSideStrengths;
-
-        _previousSideStrengths resize 0;
-        _previousSideStrengths append _sideStrengths;
+        [_trigger,_oldOwner,_previousCapturingSide,_capturingSide] call FUNC(notifyTakingControl);
     };
+
+    _args set [1,_capturingSide];
 
 
     if (_newOwner != _oldOwner) then {
@@ -92,4 +60,4 @@ private _previousSideStrengthsDiff = _previousSideStrengths apply {0};
         if (_trigger getVariable "grad_sectors_lockAfterCapture") exitWith {[_handle] call CBA_fnc_removePerFrameHandler};
     };
 
-},1,[_this select 0,_previousSideStrengths,_previousSideStrengthsDiff]] call CBA_fnc_addPerFrameHandler;
+},1,[_this select 0,_previousCapturingSide]] call CBA_fnc_addPerFrameHandler;
