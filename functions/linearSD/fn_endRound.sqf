@@ -19,16 +19,39 @@ if (_winner != GVAR(defendingSide)) then {
     } forEach _linkedSectors;
 };
 
-
 private _winnerDisplayName = [_winner] call EFUNC(common,getSideDisplayName);
 if (_isLastSector) then {
     ["",format ["%1 wins!",_winnerDisplayName],[_winner],[]] call EFUNC(endings,endMissionServer);
 
 } else {
-    _messagePic = ["seize_ca","defend_ca"] select (_winner == GVAR(defendingSide));
+
+    _messagePic = ["cfg\gametypes\seize_ca","cfg\gametypes\defend_ca"] select (_winner == GVAR(defendingSide));
     _winMessage = format ["%1 wins the round.",_winnerDisplayName];
     [_endMessage,_winMessage,_messagePic] call FUNC(dynamicText);
 
-    private _nextActiveSector = GVAR(activeSectorID) + GVAR(opforDirection) * ([-1,1] select (_winner == EAST));
-    [FUNC(startNewRound),[_nextActiveSector],5] call CBA_fnc_waitAndExecute;
+    if (GVAR(isLastRound)) then {
+        _currentSectorCountOpfor = {(_x getVariable [QGVAR(currentOwner),sideUnknown]) == EAST} count EGVAR(sectors,sectorTriggers);
+
+        _winners = [];
+        _winText = "";
+        switch (true) do {
+            case (_currentSectorCountOpfor == GVAR(startingSectorCountOpfor)): {
+                _winners = [EAST,WEST];
+                _winText = "No sectors captured. Stalemate.";
+            };
+            case (_currentSectorCountOpfor > GVAR(startingSectorCountOpfor)): {
+                _winners = [EAST];
+                _winText = format ["%1 wins by sectors captured!",[EAST] call EFUNC(common,getSideDisplayName)];
+            };
+            case (_currentSectorCountOpfor < GVAR(startingSectorCountOpfor)): {
+                _winners = [WEST];
+                _winText = format ["%1 wins by sectors captured!",[WEST] call EFUNC(common,getSideDisplayName)];
+            };
+        };
+        [EFUNC(endings,endMissionServer),["",_winText,_winners,[]],8] call CBA_fnc_waitAndExecute;
+
+    } else {
+        _nextActiveSector = GVAR(activeSectorID) + GVAR(opforDirection) * ([-1,1] select (_winner == EAST));
+        [FUNC(startNewRound),[_nextActiveSector],5] call CBA_fnc_waitAndExecute;
+    };
 };

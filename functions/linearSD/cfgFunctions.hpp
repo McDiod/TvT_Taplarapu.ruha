@@ -1,6 +1,7 @@
 class grad_linearSD {
     class linearSD {
         class activeSectorBeingCaptured {};
+        class addChatCommands {};
         class addTeleportAction {};
         class addVehicles {};
         class createSector {};
@@ -12,6 +13,7 @@ class grad_linearSD {
         class playzoneCleanup {};
         class respawnPlayer {};
         class setActiveSectors {};
+        class setLastRound {};
         class spawnSectorVehicles {};
         class startEliminationCheck {};
         class startLinearSD {};

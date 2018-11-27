@@ -44,8 +44,8 @@ if (GVAR(roundNumber) > 1) then {
 
         _attackingSide = [WEST,EAST] select (GVAR(defendingSide) == WEST);
         _roundText = format ["Round %1",GVAR(roundNumber)];
-        [_roundText,"You are attacking.","seize_ca"] remoteExec [QFUNC(dynamicText),_attackingSide,false];
-        [_roundText,"You are defending.","defend_ca"] remoteExec [QFUNC(dynamicText),GVAR(defendingSide),false];
+        [_roundText,"You are attacking.","cfg\gametypes\seize_ca"] remoteExec [QFUNC(dynamicText),_attackingSide,false];
+        [_roundText,"You are defending.","cfg\gametypes\defend_ca"] remoteExec [QFUNC(dynamicText),GVAR(defendingSide),false];
 
         [] call FUNC(playzoneCleanup);
         {[_x,_attackingSide] call FUNC(spawnSectorVehicles)} forEach _attackerSectors;

@@ -4,6 +4,7 @@ params [["_startingSectorID",-1],["_roundLength",60],["_opforDirection",1]];
 
 if (hasInterface) then {
     [] call FUNC(addTeleportAction);
+    [] call FUNC(addChatCommands);
 };
 
 if (isServer) then {
@@ -23,6 +24,8 @@ if (isServer) then {
     GVAR(opforDirection) = _opforDirection;
     GVAR(defendingSide) = sideUnknown;
     GVAR(allAttackerVehicles) = [];
+    GVAR(isLastRound) = false;
+    GVAR(startingSectorCountOpfor) = {(_x getVariable [QGVAR(currentOwner),sideUnknown]) == EAST} count EGVAR(sectors,sectorTriggers);
 
     [_startingSectorID] call FUNC(startNewRound);
     [] call FUNC(startTimeout);

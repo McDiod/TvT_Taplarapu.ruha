@@ -2,7 +2,7 @@
 
 params [["_line1",""],["_line2",""],["_messagePic","seize_ca"]];
 
-private _messagePic = format ["\a3\ui_f\data\gui\cfg\gametypes\%1.paa",_messagePic];
+private _messagePic = format ["\a3\ui_f\data\gui\%1.paa",_messagePic];
 
 private _compiledLines = _line1;
 if (_line2 != "") then {
