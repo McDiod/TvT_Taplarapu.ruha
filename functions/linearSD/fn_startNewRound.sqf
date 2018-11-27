@@ -36,7 +36,7 @@ missionNamespace setVariable [QGVAR(sectorsEast),[_attackerSectors,_activeSector
 if (GVAR(roundNumber) > 1) then {
 
     // wait 5s
-    [{[] remoteExec [QFUNC(respawnPlayer),0,false]},[],5] call CBA_fnc_waitAndExecute;
+    [{[] remoteExec [QFUNC(respawnPlayer),0,false]},[],3] call CBA_fnc_waitAndExecute;
 
     // wait 10s
     [{

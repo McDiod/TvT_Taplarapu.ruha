@@ -28,6 +28,6 @@ if (isNil QGVAR(playerRespawnEH)) then {
 
 cutText ["","BLACK OUT",0.5];
 [{
-    setPlayerRespawnTime 2;
+    setPlayerRespawnTime 10;
     forceRespawn player;
 },[],1] call CBA_fnc_waitAndExecute;
