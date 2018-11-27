@@ -9,6 +9,7 @@ class grad_linearSD {
         class dynamicText {};
         class endRound {};
         class isLastSector {};
+        class movePlayerToRespawnPos {};
         class onPlayerKilled {};
         class onSectorCaptured {};
         class playzoneCleanup {};
