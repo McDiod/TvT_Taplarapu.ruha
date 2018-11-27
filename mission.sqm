@@ -8,7 +8,7 @@ class EditorData
 	toggles=1;
 	class ItemIDProvider
 	{
-		nextID=504;
+		nextID=514;
 	};
 	class MarkerIDProvider
 	{
@@ -16,14 +16,14 @@ class EditorData
 	};
 	class LayerIndexProvider
 	{
-		nextID=167;
+		nextID=177;
 	};
 	class Camera
 	{
-		pos[]={2365.4272,46.377243,2501.8975};
-		dir[]={-0.85833603,-0.50251395,-0.10393539};
-		up[]={-0.49889165,0.86455125,-0.060410552};
-		aside[]={-0.12021441,-3.5925768e-007,0.99277979};
+		pos[]={1142.1449,111.76723,359.89774};
+		dir[]={0.75946552,-0.57898444,-0.29665279};
+		up[]={0.53930622,0.81533438,-0.21065618};
+		aside[]={-0.36383772,1.0698568e-007,-0.93146837};
 	};
 };
 binarizationWanted=0;
@@ -6388,7 +6388,7 @@ class Mission
 			name="Sectors";
 			class Entities
 			{
-				items=23;
+				items=33;
 				class Item0
 				{
 					dataType="Trigger";
@@ -6445,7 +6445,7 @@ class Mission
 				class Item4
 				{
 					dataType="Trigger";
-					position[]={3180.5249,23.168547,3374.436};
+					position[]={3180.7004,14.977008,3372.7256};
 					angle=1.3252541;
 					class Attributes
 					{
@@ -6455,7 +6455,6 @@ class Mission
 					};
 					id=474;
 					type="EmptyDetectorAreaR50";
-					atlOffset=7.9910002;
 				};
 				class Item5
 				{
@@ -6500,7 +6499,7 @@ class Mission
 				class Item8
 				{
 					dataType="Trigger";
-					position[]={1252.4988,27.814587,309.03192};
+					position[]={1252.4988,12.056786,309.03192};
 					angle=3.7790701;
 					class Attributes
 					{
@@ -6566,8 +6565,8 @@ class Mission
 					dataType="Logic";
 					class PositionInfo
 					{
-						position[]={2111.855,19.545677,2556.5488};
-						angles[]={0.012496647,0,6.2656889};
+						position[]={2174.8328,18.621674,2520.9739};
+						angles[]={0,0,6.2731905};
 					};
 					init="call{[this,""Ojalankylä"",EAST,2] call grad_linearsd_fnc_createSector;}";
 					id=485;
@@ -6681,9 +6680,120 @@ class Mission
 					id=503;
 					type="LocationArea_F";
 				};
+				class Item23
+				{
+					dataType="Logic";
+					class PositionInfo
+					{
+						position[]={3185.5581,14.161568,3354.1321};
+					};
+					init="call{[this] call grad_linearSD_fnc_addRespawnPosition;}";
+					id=504;
+					type="Logic";
+				};
+				class Item24
+				{
+					dataType="Logic";
+					class PositionInfo
+					{
+						position[]={3501.8445,8.9977217,4098.1597};
+					};
+					init="call{[this] call grad_linearSD_fnc_addRespawnPosition;}";
+					id=505;
+					type="Logic";
+				};
+				class Item25
+				{
+					dataType="Logic";
+					class PositionInfo
+					{
+						position[]={4370.9751,7.1637282,5045.522};
+					};
+					init="call{[this] call grad_linearSD_fnc_addRespawnPosition;}";
+					id=506;
+					type="Logic";
+				};
+				class Item26
+				{
+					dataType="Logic";
+					class PositionInfo
+					{
+						position[]={4427.0474,4.750576,4203.7695};
+					};
+					init="call{[this] call grad_linearSD_fnc_addRespawnPosition;}";
+					id=507;
+					type="Logic";
+				};
+				class Item27
+				{
+					dataType="Logic";
+					class PositionInfo
+					{
+						position[]={4044.9421,5.8103242,3057.512};
+						angles[]={6.268187,0,6.2806959};
+					};
+					init="call{[this] call grad_linearSD_fnc_addRespawnPosition;}";
+					id=508;
+					type="Logic";
+				};
+				class Item28
+				{
+					dataType="Logic";
+					class PositionInfo
+					{
+						position[]={2267.498,17.802938,2452.6624};
+					};
+					init="call{[this] call grad_linearSD_fnc_addRespawnPosition;}";
+					id=509;
+					type="Logic";
+				};
+				class Item29
+				{
+					dataType="Logic";
+					class PositionInfo
+					{
+						position[]={3444.9531,5.9778147,1972.392};
+					};
+					init="call{[this] call grad_linearSD_fnc_addRespawnPosition;}";
+					id=510;
+					type="Logic";
+				};
+				class Item30
+				{
+					dataType="Logic";
+					class PositionInfo
+					{
+						position[]={2863.6538,17.773298,883.46106};
+					};
+					init="call{[this] call grad_linearSD_fnc_addRespawnPosition;}";
+					id=511;
+					type="Logic";
+				};
+				class Item31
+				{
+					dataType="Logic";
+					class PositionInfo
+					{
+						position[]={1918.0377,14.784053,1097.6965};
+					};
+					init="call{[this] call grad_linearSD_fnc_addRespawnPosition;}";
+					id=512;
+					type="Logic";
+				};
+				class Item32
+				{
+					dataType="Logic";
+					class PositionInfo
+					{
+						position[]={1245.6985,12.366025,340.84021};
+					};
+					init="call{[this] call grad_linearSD_fnc_addRespawnPosition;}";
+					id=513;
+					type="Logic";
+				};
 			};
 			id=493;
-			atlOffset=2.9758167;
+			atlOffset=0.092748642;
 		};
 		class Item5
 		{
@@ -6922,11 +7032,11 @@ class Mission
 	{
 		class LinkIDProvider
 		{
-			nextID=48;
+			nextID=58;
 		};
 		class Links
 		{
-			items=48;
+			items=58;
 			class Item0
 			{
 				linkID=0;
@@ -7402,6 +7512,106 @@ class Mission
 				linkID=47;
 				item0=503;
 				item1=475;
+				class CustomData
+				{
+					type="Sync";
+				};
+			};
+			class Item48
+			{
+				linkID=48;
+				item0=504;
+				item1=474;
+				class CustomData
+				{
+					type="Sync";
+				};
+			};
+			class Item49
+			{
+				linkID=49;
+				item0=505;
+				item1=477;
+				class CustomData
+				{
+					type="Sync";
+				};
+			};
+			class Item50
+			{
+				linkID=50;
+				item0=506;
+				item1=480;
+				class CustomData
+				{
+					type="Sync";
+				};
+			};
+			class Item51
+			{
+				linkID=51;
+				item0=507;
+				item1=478;
+				class CustomData
+				{
+					type="Sync";
+				};
+			};
+			class Item52
+			{
+				linkID=52;
+				item0=508;
+				item1=473;
+				class CustomData
+				{
+					type="Sync";
+				};
+			};
+			class Item53
+			{
+				linkID=53;
+				item0=509;
+				item1=475;
+				class CustomData
+				{
+					type="Sync";
+				};
+			};
+			class Item54
+			{
+				linkID=54;
+				item0=510;
+				item1=470;
+				class CustomData
+				{
+					type="Sync";
+				};
+			};
+			class Item55
+			{
+				linkID=55;
+				item0=511;
+				item1=471;
+				class CustomData
+				{
+					type="Sync";
+				};
+			};
+			class Item56
+			{
+				linkID=56;
+				item0=512;
+				item1=472;
+				class CustomData
+				{
+					type="Sync";
+				};
+			};
+			class Item57
+			{
+				linkID=57;
+				item0=513;
+				item1=479;
 				class CustomData
 				{
 					type="Sync";

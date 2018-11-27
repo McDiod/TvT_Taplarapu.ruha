@@ -25,7 +25,7 @@ if (isServer) then {
     GVAR(defendingSide) = sideUnknown;
     GVAR(allAttackerVehicles) = [];
     GVAR(isLastRound) = false;
-    GVAR(startingSectorCountOpfor) = {(_x getVariable [QGVAR(currentOwner),sideUnknown]) == EAST} count EGVAR(sectors,sectorTriggers);
+    GVAR(startingSectorCountOpfor) = {(_x getVariable [QEGVAR(sectors,currentOwner),sideUnknown]) == EAST} count EGVAR(sectors,sectorTriggers);
 
     [_startingSectorID] call FUNC(startNewRound);
     [] call FUNC(startTimeout);

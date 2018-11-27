@@ -2,6 +2,7 @@ class grad_linearSD {
     class linearSD {
         class activeSectorBeingCaptured {};
         class addChatCommands {};
+        class addRespawnPosition {};
         class addTeleportAction {};
         class addVehicles {};
         class createSector {};

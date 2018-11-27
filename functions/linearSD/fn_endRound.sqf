@@ -27,10 +27,10 @@ if (_isLastSector) then {
 
     _messagePic = ["cfg\gametypes\seize_ca","cfg\gametypes\defend_ca"] select (_winner == GVAR(defendingSide));
     _winMessage = format ["%1 wins the round.",_winnerDisplayName];
-    [_endMessage,_winMessage,_messagePic] call FUNC(dynamicText);
+    [_endMessage,_winMessage,_messagePic] remoteExec [QFUNC(dynamicText),0,false];
 
     if (GVAR(isLastRound)) then {
-        _currentSectorCountOpfor = {(_x getVariable [QGVAR(currentOwner),sideUnknown]) == EAST} count EGVAR(sectors,sectorTriggers);
+        _currentSectorCountOpfor = {(_x getVariable [QEGVAR(sectors,currentOwner),sideUnknown]) == EAST} count EGVAR(sectors,sectorTriggers);
 
         _winners = [];
         _winText = "";

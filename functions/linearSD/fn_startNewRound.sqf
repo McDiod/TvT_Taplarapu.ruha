@@ -8,24 +8,24 @@ publicVariable QGVAR(roundNumber);
 [_activeSectorID] call FUNC(setActiveSectors);
 
 private _activeSectors = GVAR(sectorTriggers) select _activeSectorID;
-private _defenderSector0 = _activeSectors select 0;
 
-GVAR(defendingSide) = _defenderSector0 getVariable [QEGVAR(sectors,currentOwner),sideUnknown];
+GVAR(defendingSide) = (_activeSectors select 0) getVariable [QEGVAR(sectors,currentOwner),sideUnknown];
 private _attackingSide = [WEST,EAST] select (GVAR(defendingSide) == WEST);
 
 private _attackDirection = [-GVAR(opforDirection),GVAR(opforDirection)] select (GVAR(defendingSide) == WEST);
 
 private _attackerSectors =  GVAR(sectorTriggers) select (_activeSectorID - _attackDirection);
-private _attackerSector0 = _attackerSectors select 0;
 
 missionNamespace setVariable [QGVAR(sectorsWest),[_attackerSectors,_activeSectors] select (GVAR(defendingSide) == WEST),true];
 missionNamespace setVariable [QGVAR(sectorsEast),[_attackerSectors,_activeSectors] select (GVAR(defendingSide) == EAST),true];
 
 {
     _respawnMarker = ["respawn_west","respawn_east"] select _forEachIndex;
-    _sector = [_attackerSector0,_defenderSector0] select (_x == GVAR(defendingSide));
-    _respawnPos = (getPos _sector) findEmptyPosition [0,100,"B_Soldier_F"];
-    if (count _respawnPos == 0) then {_respawnPos = getPos _sector};
+    _sector = [selectRandom _attackerSectors,selectRandom _activeSectors] select (_x == GVAR(defendingSide));
+
+    _respawnSearchPos = _sector getVariable [QGVAR(respawnPosition),getPos _sector];
+    _respawnPos = _respawnSearchPos findEmptyPosition [0,100,"B_Soldier_F"];
+    if (count _respawnPos == 0) then {_respawnPos = _respawnSearchPos};
 
     _respawnMarker setMarkerPos _respawnPos;
 } forEach [WEST,EAST];
