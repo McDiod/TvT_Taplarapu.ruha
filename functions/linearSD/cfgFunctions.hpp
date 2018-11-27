@@ -1,7 +1,9 @@
 class grad_linearSD {
     class linearSD {
+        class activateFortifications {};
         class activeSectorBeingCaptured {};
         class addChatCommands {};
+        class addFortifications {};
         class addRespawnPosition {};
         class addTeleportAction {};
         class addVehicles {};

@@ -10,14 +10,12 @@ publicVariable QGVAR(roundNumber);
 private _activeSectors = GVAR(sectorTriggers) select _activeSectorID;
 
 GVAR(defendingSide) = (_activeSectors select 0) getVariable [QEGVAR(sectors,currentOwner),sideUnknown];
-private _attackingSide = [WEST,EAST] select (GVAR(defendingSide) == WEST);
 
-private _attackDirection = [-GVAR(opforDirection),GVAR(opforDirection)] select (GVAR(defendingSide) == WEST);
-
-private _attackerSectors =  GVAR(sectorTriggers) select (_activeSectorID - _attackDirection);
-
+private _attackerSectors =  GVAR(sectorTriggers) select GVAR(attackerSectorID);
 missionNamespace setVariable [QGVAR(sectorsWest),[_attackerSectors,_activeSectors] select (GVAR(defendingSide) == WEST),true];
 missionNamespace setVariable [QGVAR(sectorsEast),[_attackerSectors,_activeSectors] select (GVAR(defendingSide) == EAST),true];
+
+[] call FUNC(activateFortifications);
 
 {
     _respawnMarker = ["respawn_west","respawn_east"] select _forEachIndex;
@@ -57,6 +55,7 @@ if (GVAR(roundNumber) > 1) then {
     },[_attackerSectors,_attackingSide],10] call CBA_fnc_waitAndExecute;
 
 } else {
+    _attackingSide = [WEST,EAST] select (GVAR(defendingSide) == WEST);
     {[_x,_attackingSide] call FUNC(spawnSectorVehicles)} forEach _attackerSectors;
 
     {
