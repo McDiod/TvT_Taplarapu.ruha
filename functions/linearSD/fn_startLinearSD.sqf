@@ -22,6 +22,7 @@ if (isServer) then {
 
     GVAR(opforDirection) = _opforDirection;
     GVAR(defendingSide) = sideUnknown;
+    GVAR(allAttackerVehicles) = [];
 
     [_startingSectorID] call FUNC(startNewRound);
     [] call FUNC(startTimeout);

@@ -40,18 +40,25 @@ if (GVAR(roundNumber) > 1) then {
 
     // wait 10s
     [{
+        params ["_attackerSectors","_attackingSide"];
+
         _attackingSide = [WEST,EAST] select (GVAR(defendingSide) == WEST);
         _roundText = format ["Round %1",GVAR(roundNumber)];
         [_roundText,"You are attacking.","seize_ca"] remoteExec [QFUNC(dynamicText),_attackingSide,false];
         [_roundText,"You are defending.","defend_ca"] remoteExec [QFUNC(dynamicText),GVAR(defendingSide),false];
 
+        [] call FUNC(playzoneCleanup);
+        {[_x,_attackingSide] call FUNC(spawnSectorVehicles)} forEach _attackerSectors;
+
         [["PREPARATION_TIME", 0] call BIS_fnc_getParamValue,{
             missionNamespace setVariable [QGVAR(roundTimeLeft),GVAR(roundLength),true];
             missionNamespace setVariable [QGVAR(roundInProgress),true,true];
         }] call EFUNC(missionSetup,startPreparationTime);
-    },[],10] call CBA_fnc_waitAndExecute;
+    },[_attackerSectors,_attackingSide],10] call CBA_fnc_waitAndExecute;
 
 } else {
+    {[_x,_attackingSide] call FUNC(spawnSectorVehicles)} forEach _attackerSectors;
+
     {
         [{
             _respawnMarker = ["respawn_west","respawn_east"] select (side _this == EAST);
