@@ -3,7 +3,7 @@
 params [["_start",true]];
 
 [{
-
+    if (EGVAR(common,gamePaused)) exitWith {};
     if (!GVAR(roundInProgress)) exitWith {};
 
     GVAR(roundTimeLeft) = (GVAR(roundTimeLeft) - 1) max 0;

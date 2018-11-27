@@ -11,6 +11,8 @@ private _previousCapturingSide = _trigger getVariable QGVAR(currentOwner);
     params ["_args","_handle"];
     _args params ["_trigger","_previousCapturingSide"];
 
+    if (EGVAR(common,gamePaused)) exitWith {};
+
     if (isNull _trigger) exitWith {
         [_handle] call CBA_fnc_removePerFrameHandler;
         ERROR("A sector trigger is null. Exiting PFH.");

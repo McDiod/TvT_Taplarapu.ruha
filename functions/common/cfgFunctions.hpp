@@ -13,6 +13,7 @@ class grad_common {
         class removeUnitKilledEH {};
         class restrictZone {};
         class restrictZonePFH {};
+        class setGamePaused {};
         class teleport {};
     };
 };

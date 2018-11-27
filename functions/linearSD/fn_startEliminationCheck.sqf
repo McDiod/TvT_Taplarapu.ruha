@@ -20,6 +20,8 @@ if (_mode == "PRECHECK") then {
         params ["_args","_handle"];
         _args params ["_side","_iteration"];
 
+        if (EGVAR(common,gamePaused)) exitWith {};
+
         if (!GVAR(roundInProgress)) exitWith {
             [_handle] call CBA_fnc_removePerFrameHandler;
             [_side,"PRECHECK"] call FUNC(startEliminationCheck);
