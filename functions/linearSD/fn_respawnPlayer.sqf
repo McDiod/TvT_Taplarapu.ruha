@@ -1,6 +1,7 @@
 #include "component.hpp"
 
 if (!hasInterface) exitWith {};
+if !(playerSide in [WEST,EAST]) exitWith {};
 
 if (isNil QGVAR(playerRespawnEH)) then {
     GVAR(playerRespawnEH) = player addEventHandler ["Respawn",{

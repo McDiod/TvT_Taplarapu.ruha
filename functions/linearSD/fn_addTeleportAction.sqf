@@ -14,7 +14,7 @@ private _insertChildrenFunc = {
                 params ["_unit","",["_sector",objNull]];
                 if (isNull _sector) exitWith {systemChat "ERROR: Sector unknown."};
 
-                _pos = (getPos _sector) findEmptyPosition [0,100,"B_Soldier_F"];
+                _pos = _sector getVariable [QGVAR(respawnPosition),(getPos _sector) findEmptyPosition [0,100,"B_Soldier_F"]];
                 if (count _pos == 0) then {_pos = getPos _sector};
                 [_unit,_pos] call EFUNC(common,teleport);
             },

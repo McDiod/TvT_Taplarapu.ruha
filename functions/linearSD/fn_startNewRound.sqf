@@ -1,5 +1,7 @@
 #include "component.hpp"
 
+if (!isServer) exitWith {};
+
 params [["_activeSectorID",-1]];
 
 GVAR(roundNumber) = (missionNamespace getVariable [QGVAR(roundNumber),0]) + 1;
