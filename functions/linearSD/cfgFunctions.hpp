@@ -12,6 +12,7 @@ class grad_linearSD {
         class endRound {};
         class isLastSector {};
         class movePlayerToRespawnPos {};
+        class moveRespawnPositions {};
         class onPlayerKilled {};
         class onSectorCaptured {};
         class playzoneCleanup {};

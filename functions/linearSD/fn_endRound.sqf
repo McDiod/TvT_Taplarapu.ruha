@@ -8,15 +8,13 @@ missionNamespace setVariable [QGVAR(roundInProgress),false,true];
 
 // attacker is winner --> set sectors captured
 if (_winner != GVAR(defendingSide)) then {
-    _linkedSectors = GVAR(sectorTriggers) select GVAR(activeSectorID);
-    _oldOwner = [WEST,EAST] select (_winner == WEST);
     {
         _x setVariable [QEGVAR(sectors,currentOwner),_winner];
-        _x setVariable [QEGVAR(sectors,previousOwner),_oldOwner];
+        _x setVariable [QEGVAR(sectors,previousOwner),GVAR(defendingSide)];
         _x setVariable [QEGVAR(sectors,blocked),true];
         _x setVariable [QEGVAR(sectors,sideStrengths),[0,0,0]];
         [_x] call EFUNC(sectors,updateMarker);
-    } forEach _linkedSectors;
+    } forEach GVAR(activeSectors);
 };
 
 private _winnerDisplayName = [_winner] call EFUNC(common,getSideDisplayName);
