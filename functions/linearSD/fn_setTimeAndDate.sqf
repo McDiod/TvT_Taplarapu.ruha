@@ -26,6 +26,14 @@ reverse _targetDateAndTime;
 _targetDateAndTime params [["_targetMinute",_curMinute],["_targetHour",_curHour],["_targetDay",_curDay],["_targetMonth",_curMonth],["_targetYear",_curYear]];
 _targetDateAndTime = [_targetYear,_targetMonth,_targetDay,_targetHour,_targetMinute];
 
-if ((_targetYear <= _curYear) && {(dateToNumber _dateAndTime) > (dateToNumber _targetDateAndTime)}) exitWith {ERROR_1("Date and time for round %1 are in the past!",GVAR(roundNumber))};
+private _curDateNumber = dateToNumber _dateAndTime;
+private _targetDateNumber = dateToNumber _targetDateAndTime;
 
-setDate _targetDateAndTime;
+if ((_targetYear <= _curYear) && {_curDateNumber > _targetDateNumber}) exitWith {ERROR_1("Date and time for round %1 are in the past!",GVAR(roundNumber))};
+
+if (_targetYear == _curYear) then {
+    // 8760 hours in a year (dateToNumber accounts for leap years by increasing range)
+    skipTime ((_targetDateNumber - _curDateNumber) * 8760);
+} else {
+    setDate _targetDateAndTime;
+};
