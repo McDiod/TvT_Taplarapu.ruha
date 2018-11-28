@@ -3,6 +3,7 @@ class grad_common {
         class addJipToZeus {};
         class addUnitKilledEH {};
         class coverMap {};
+        class displayDateAndTime {};
         class getAllowedRadios {};
         class getSideColor {};
         class getSideDisplayName {};

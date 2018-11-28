@@ -1,6 +1,6 @@
 #include "component.hpp"
 
-params [["_startingSectorID",-1],["_roundLength",60],["_opforDirection",1]];
+params [["_startingSectorID",-1],["_roundLength",60],["_opforDirection",1],["_dateAndTimeArray",[]]];
 
 if (hasInterface) then {
     [] call FUNC(addTeleportAction);
@@ -26,6 +26,7 @@ if (isServer) then {
     publicVariable QGVAR(roundTimeLeft);
 
     GVAR(opforDirection) = _opforDirection;
+    GVAR(dateAndTimeArray) = _dateAndTimeArray;
     GVAR(defendingSide) = sideUnknown;
     GVAR(allAttackerVehicles) = [];
     GVAR(isLastRound) = false;

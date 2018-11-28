@@ -12,11 +12,11 @@ if (isNil QGVAR(playerRespawnEH)) then {
         _respawnMarker = ["respawn_west","respawn_east"] select (playerSide == EAST);
         _pos = (getMarkerPos _respawnMarker) findEmptyPosition [0,30,"B_Soldier_F"];
         if (_pos isEqualTo []) then {_pos = getMarkerPos _respawnMarker};
-        [player,_pos] call EFUNC(common,teleport);
+        [player,_pos,nil,nil,nil,false] call EFUNC(common,teleport);
 
-        cutText ["","BLACK IN",1.5];
         setPlayerRespawnTime 99999;
 
+        // manually assign old curator logic to new unit - for some reason it gets lost across respawns
         _assignedCuratorLogic = getAssignedCuratorLogic _oldUnit;
         deleteVehicle _oldUnit;
 
@@ -26,8 +26,7 @@ if (isNil QGVAR(playerRespawnEH)) then {
     }];
 };
 
-cutText ["","BLACK OUT",0.5];
 [{
-    setPlayerRespawnTime 10;
+    setPlayerRespawnTime 5;
     forceRespawn player;
 },[],1] call CBA_fnc_waitAndExecute;

@@ -16,14 +16,14 @@ class EditorData
 	};
 	class LayerIndexProvider
 	{
-		nextID=322;
+		nextID=356;
 	};
 	class Camera
 	{
-		pos[]={1746.3395,39.940536,1057.9114};
-		dir[]={0.91000289,-0.33287466,0.2471756};
-		up[]={0.32123843,0.94296974,0.087254867};
-		aside[]={0.26212433,1.1164229e-007,-0.96503711};
+		pos[]={1944.2003,16.158943,1072.8013};
+		dir[]={-0.6357317,-0.22152586,-0.7394675};
+		up[]={-0.14442237,0.97515374,-0.16798764};
+		aside[]={-0.75830877,-3.509922e-008,0.65192854};
 	};
 };
 binarizationWanted=0;
@@ -2080,7 +2080,7 @@ class CustomAttributes
 																"BOOL"
 															};
 														};
-														value=0;
+														value=1;
 													};
 												};
 												class Item1
@@ -3137,24 +3137,29 @@ class Mission
 {
 	class Intel
 	{
-		timeOfChanges=1800.0002;
-		startWeather=0;
+		timeOfChanges=28800;
+		startWeather=0.094868228;
+		startFog=0.018592276;
 		startWind=0.1;
 		startWaves=0.1;
-		forecastWeather=0;
-		forecastWind=0.1;
+		startGust=0.07798785;
+		forecastWeather=0.42403764;
+		forecastFog=0.060092974;
+		forecastWind=0.22147192;
 		forecastWaves=0.1;
 		forecastLightnings=0.1;
-		rainForced=1;
-		lightningsForced=1;
+		forecastGust=0.38746354;
+		forecastWindDir=186;
 		wavesForced=1;
 		windForced=1;
-		year=2035;
-		day=28;
-		hour=13;
-		minute=37;
+		year=2019;
+		month=4;
+		day=26;
+		hour=4;
+		minute=18;
+		forecastFogBase=-237.93701;
 		startFogDecay=0.014;
-		forecastFogDecay=0.014;
+		forecastFogDecay=0.0093293376;
 	};
 	class Entities
 	{
@@ -14666,7 +14671,7 @@ class Mission
 				};
 			};
 			id=1609;
-			atlOffset=6.1725397;
+			atlOffset=2.1694431;
 		};
 		class Item11
 		{
