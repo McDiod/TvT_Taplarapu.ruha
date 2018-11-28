@@ -23,5 +23,5 @@ missionNamespace setVariable [QGVAR(attackerSectors),GVAR(sectorTriggers) select
 missionNamespace setVariable [QGVAR(attackerSectorID),GVAR(activeSectorID) - GVAR(attackDirection),true];
 missionNamespace setVariable [QGVAR(sectorsWest),[GVAR(attackerSectors),GVAR(activeSectors)] select (GVAR(defendingSide) == WEST),true];
 missionNamespace setVariable [QGVAR(sectorsEast),[GVAR(attackerSectors),GVAR(activeSectors)] select (GVAR(defendingSide) == EAST),true];
-missionNamespace setVariable [QGVAR(defendingSide),(GVAR(activeSectors) select 0) getVariable [QEGVAR(sectors,currentOwner),sideUnknown]]
+missionNamespace setVariable [QGVAR(defendingSide),(GVAR(activeSectors) select 0) getVariable [QEGVAR(sectors,currentOwner),sideUnknown]];
 missionNamespace setVariable [QGVAR(attackingSide),[WEST,EAST] select (GVAR(defendingSide) == WEST),true];
