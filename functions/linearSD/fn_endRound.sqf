@@ -14,6 +14,7 @@ if (_winner != GVAR(defendingSide)) then {
         _x setVariable [QEGVAR(sectors,blocked),true];
         _x setVariable [QEGVAR(sectors,sideStrengths),[0,0,0]];
         [_x] call EFUNC(sectors,updateMarker);
+        [_x,false] call EFUNC(sectors,updateTasks);
     } forEach GVAR(activeSectors);
 };
 

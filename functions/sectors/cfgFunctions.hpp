@@ -8,6 +8,7 @@ class grad_sectors {
         class initTrigger {};
         class notifyTakingControl {};
         class startPFH {};
+        class taskSetDescription {};
         class updateMarker {};
         class updateTasks {};
     };

@@ -5,11 +5,11 @@
 *     1:    destination
 */
 
-params ["_unit",["_pos", [0,0,0]],["_onTPStart",{}],["_onTPEnd",{}],["_codeParams",[]]];
+params ["_unit",["_pos", [0,0,0]],["_onTPStart",{}],["_onTPEnd",{}],["_codeParams",[]],["_fade",true]];
 
 if (!local _unit) exitWith {};
 
-if (ACE_player == _unit) then {
+if (_fade && ACE_player == _unit) then {
     titleCut ["","BLACK OUT",0];
     titleCut ["","BLACK IN",1.5];
 };
