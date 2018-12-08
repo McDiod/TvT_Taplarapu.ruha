@@ -7,7 +7,7 @@ if (hasInterface) then {
     [] call FUNC(addChatCommands);
 
     if (didJIP) then {
-        [] call FUNC(movePlayerToRespawnPos);
+        [{!isNull player},FUNC(movePlayerToRespawnPos),[]] call CBA_fnc_waitUntilAndExecute;
     };
 };
 
