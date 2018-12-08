@@ -26,7 +26,8 @@ private _defenderArrayVarName = [QGVAR(defenderVehiclesWest),QGVAR(defenderVehic
         getMagazineCargo _x,
         getWeaponCargo _x,
         getBackpackCargo _x,
-        getObjectTextures _x
+        getObjectTextures _x,
+        magazinesAllTurrets _x
     ];
 
     deleteVehicle _x;

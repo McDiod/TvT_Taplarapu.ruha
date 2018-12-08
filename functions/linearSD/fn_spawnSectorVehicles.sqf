@@ -19,7 +19,8 @@ private _sectorVehiclesArray = _trigger getVariable [_vehicleArrayVarName,[]];
         ["_magazineCargo",[]],
         ["_weaponCargo",[]],
         ["_backpackCargo",[]],
-        ["_objectTextures",[]]
+        ["_objectTextures",[]],
+        ["_magazinesAllTurrets",[]]
     ];
 
     _veh = createVehicle [_type,[0,0,0],[],0,"CAN_COLLIDE"];
@@ -47,6 +48,16 @@ private _sectorVehiclesArray = _trigger getVariable [_vehicleArrayVarName,[]];
     } forEach (_backpackCargo select 0);
 
     {_veh setObjectTextureGlobal [_forEachIndex,_x]} forEach _objectTextures;
+
+    {
+        _x params [["_magName",""],["_turretPath",[0]]];
+        _veh removeMagazinesTurret [_magName,_turretPath];
+    } forEach (magazinesAllTurrets _veh);
+
+    {
+        _x params [["_magName",""],["_turretPath",[0]],["_ammoCount",0]];
+        _veh addMagazineTurret [_magName,_turretPath,_ammoCount];
+    } forEach _magazinesAllTurrets;
 
     GVAR(allAttackerVehicles) pushBack _veh;
 } forEach _sectorVehiclesArray;
