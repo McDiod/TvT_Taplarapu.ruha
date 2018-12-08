@@ -2,7 +2,7 @@
 
 if (!isServer) exitWith {};
 
-params [["_logic",objNull],["_side",sideUnknown]];
+params [["_logic",objNull],["_side",sideUnknown],["_mode","ATTACK"]];
 
 if !(_side in [WEST,EAST]) exitWith {ERROR_1("Side %1 not supported in linearSD.",_side)};
 
@@ -14,7 +14,9 @@ private _vehicles = (synchronizedObjects _logic) select {
 };
 private _sectors = _logic call bis_fnc_moduleTriggers;
 
-private _vehicleArrayVarName = [QGVAR(sectorVehiclesWest),QGVAR(sectorVehiclesEast)] select (_side == EAST);
+private _attackerArrayVarName = [QGVAR(attackerVehiclesWest),QGVAR(attackerVehiclesEast)] select (_side == EAST);
+private _defenderArrayVarName = [QGVAR(defenderVehiclesWest),QGVAR(defenderVehiclesEast)] select (_side == EAST);
+
 {
     _vehArray = [
         typeOf _x,
@@ -30,11 +32,24 @@ private _vehicleArrayVarName = [QGVAR(sectorVehiclesWest),QGVAR(sectorVehiclesEa
     deleteVehicle _x;
 
     {
-        if (isNil {_x getVariable _vehicleArrayVarName}) then {
-            _x setVariable [_vehicleArrayVarName,[]];
-        };
-        _sectorVehicles = _x getVariable _vehicleArrayVarName;
 
-        _sectorVehicles pushBack _vehArray;
+        if (toUpper _mode in ["ATTACK","BOTH"]) then {
+            if (isNil {_x getVariable _attackerArrayVarName}) then {
+                _x setVariable [_attackerArrayVarName,[]];
+            };
+
+            _sectorVehicles = _x getVariable _attackerArrayVarName;
+            _sectorVehicles pushBack _vehArray;
+        };
+
+        if (toUpper _mode in ["DEFEND","BOTH"]) then {
+            if (isNil {_x getVariable _defenderArrayVarName}) then {
+                _x setVariable [_defenderArrayVarName,[]];
+            };
+
+            _sectorVehicles = _x getVariable _defenderArrayVarName;
+            _sectorVehicles pushBack _vehArray;
+        };
+
     } forEach _sectors;
 } forEach _vehicles;

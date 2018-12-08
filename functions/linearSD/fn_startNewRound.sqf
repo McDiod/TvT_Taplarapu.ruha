@@ -39,6 +39,7 @@ publicVariable QGVAR(roundNumber);
 
     [] call FUNC(activateFortifications);
     {[_x,GVAR(attackingSide)] call FUNC(spawnSectorVehicles)} forEach GVAR(attackerSectors);
+    {[_x,GVAR(defendingSide)] call FUNC(spawnSectorVehicles)} forEach GVAR(activeSectors);
 
     _roundText = format ["Round %1",GVAR(roundNumber)];
     [_roundText,"You are attacking.","cfg\gametypes\seize_ca"] remoteExec [QFUNC(dynamicText),GVAR(attackingSide),false];

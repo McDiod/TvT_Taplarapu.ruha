@@ -1,8 +1,13 @@
 #include "component.hpp"
 
-params ["_trigger","_attackingSide"];
+params ["_trigger","_side"];
 
-private _vehicleArrayVarName = [QGVAR(sectorVehiclesWest),QGVAR(sectorVehiclesEast)] select (_attackingSide == EAST);
+private _vehicleArraysVarNames = [
+    [QGVAR(attackerVehiclesWest),QGVAR(defenderVehiclesWest)],
+    [QGVAR(attackerVehiclesEast),QGVAR(defenderVehiclesEast)]
+] select (_side == EAST);
+private _vehicleArrayVarName = _vehicleArraysVarNames select (_side == GVAR(defendingSide));
+
 private _sectorVehiclesArray = _trigger getVariable [_vehicleArrayVarName,[]];
 
 {
