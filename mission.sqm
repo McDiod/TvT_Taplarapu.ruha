@@ -16,14 +16,14 @@ class EditorData
 	};
 	class LayerIndexProvider
 	{
-		nextID=414;
+		nextID=431;
 	};
 	class Camera
 	{
-		pos[]={1098.5018,82.287415,331.84143};
-		dir[]={0.6749078,-0.65201765,-0.34567794};
-		up[]={0.58035803,0.75816369,-0.29725054};
-		aside[]={-0.45589849,8.4680505e-007,-0.89009213};
+		pos[]={4357.1089,64.793724,5128.2476};
+		dir[]={-0.14405499,-0.76897156,-0.62284696};
+		up[]={-0.1732773,0.63928169,-0.74919558};
+		aside[]={-0.97428501,-1.2066448e-007,0.22533731};
 	};
 };
 binarizationWanted=0;
@@ -47,6 +47,7 @@ addons[]=
 	"A3_Structures_F_Items_Vessels",
 	"cba_xeh",
 	"A3_Structures_F_EPA_Civ_Constructions",
+	"acex_field_rations",
 	"A3_Structures_F_Civ_Market",
 	"CUP_Misc_e_Config",
 	"A3_Structures_F_Civ_Camping",
@@ -72,7 +73,7 @@ class AddonsMetaData
 {
 	class List
 	{
-		items=26;
+		items=27;
 		class Item0
 		{
 			className="A3_Modules_F_Curator";
@@ -179,62 +180,69 @@ class AddonsMetaData
 		};
 		class Item16
 		{
+			className="acex_field_rations";
+			name="ACEX - Field Rations";
+			author="ACE-Team";
+			url="http://ace3mod.com/";
+		};
+		class Item17
+		{
 			className="CUP_Misc_e_Config";
 			name="CUP_Misc_e_Config";
 		};
-		class Item17
+		class Item18
 		{
 			className="acex_sitting";
 			name="ACEX - Sitting";
 			author="ACE-Team";
 			url="http://ace3mod.com/";
 		};
-		class Item18
+		class Item19
 		{
 			className="CUP_CAMisc";
 			name="CUP_CAMisc";
 		};
-		class Item19
+		class Item20
 		{
 			className="A3_Structures_F_Wrecks";
 			name="Arma 3 - Vehicle Wrecks";
 			author="Bohemia Interactive";
 			url="https://www.arma3.com";
 		};
-		class Item20
+		class Item21
 		{
 			className="CUP_CAStructures_E_Misc_Misc_Market";
 			name="CUP_CAStructures_E_Misc_Misc_Market";
 		};
-		class Item21
+		class Item22
 		{
 			className="A3_Structures_F_EPB";
 			name="Arma 3 Adapt Episode - Buildings and Structures";
 			author="Bohemia Interactive";
 			url="https://www.arma3.com";
 		};
-		class Item22
+		class Item23
 		{
 			className="ace_dragging";
 			name="ACE3 - Dragging";
 			author="ACE-Team";
 			url="http://ace3mod.com/";
 		};
-		class Item23
+		class Item24
 		{
 			className="A3_Signs_F";
 			name="Arma 3 - Signs";
 			author="Bohemia Interactive";
 			url="https://www.arma3.com";
 		};
-		class Item24
+		class Item25
 		{
 			className="ace_interaction";
 			name="ACE3 - Interaction";
 			author="ACE-Team";
 			url="http://ace3mod.com/";
 		};
-		class Item25
+		class Item26
 		{
 			className="CUP_Editor_Structures_Config";
 			name="CUP_Editor_Structures_Config";
@@ -3160,7 +3168,7 @@ class Mission
 	};
 	class Entities
 	{
-		items=22;
+		items=21;
 		class Item0
 		{
 			dataType="Layer";
@@ -12118,7 +12126,7 @@ class Mission
 					class PositionInfo
 					{
 						position[]={4365.2124,8.0226383,5092.0718};
-						angles[]={-0,0.062726438,0.0099949092};
+						angles[]={0,0.062726438,0.0099949092};
 					};
 					side="Empty";
 					flags=4;
@@ -12153,7 +12161,7 @@ class Mission
 					class PositionInfo
 					{
 						position[]={4360.8643,7.979157,5090.5776};
-						angles[]={-0,5.560514,0.0099949092};
+						angles[]={0,5.560514,0.0099949092};
 					};
 					side="Empty";
 					flags=4;
@@ -12170,7 +12178,7 @@ class Mission
 					class PositionInfo
 					{
 						position[]={4361.1133,7.8843303,5088.5923};
-						angles[]={-0,5.560514,0.0099949092};
+						angles[]={0,5.560514,0.0099949092};
 					};
 					side="Empty";
 					flags=4;
@@ -12205,7 +12213,7 @@ class Mission
 					class PositionInfo
 					{
 						position[]={4362.519,7.6766958,5089.9082};
-						angles[]={-0,1.8955493,0.0099949092};
+						angles[]={0,1.8955493,0.0099949092};
 					};
 					side="Empty";
 					flags=4;
@@ -12223,7 +12231,7 @@ class Mission
 					class PositionInfo
 					{
 						position[]={4364.3896,7.6911526,5089.791};
-						angles[]={-0,2.4186425,0};
+						angles[]={0,2.4186425,0};
 					};
 					side="Empty";
 					flags=4;
@@ -12241,7 +12249,7 @@ class Mission
 					class PositionInfo
 					{
 						position[]={4363.3921,7.6854262,5089.8535};
-						angles[]={-0,0.3245787,0.0099949092};
+						angles[]={0,0.3245787,0.0099949092};
 					};
 					side="Empty";
 					flags=4;
@@ -12259,7 +12267,7 @@ class Mission
 					class PositionInfo
 					{
 						position[]={4364.0098,7.691153,5090.752};
-						angles[]={-0,5.8223133,0};
+						angles[]={0,5.8223133,0};
 					};
 					side="Empty";
 					flags=4;
@@ -13365,7 +13373,7 @@ class Mission
 					};
 					id=956;
 					type="Barrel4";
-					atlOffset=0.005865097;
+					atlOffset=-0.00014591217;
 				};
 				class Item26
 				{
@@ -13383,7 +13391,7 @@ class Mission
 					};
 					id=957;
 					type="Barrel4";
-					atlOffset=0.0052585602;
+					atlOffset=-9.6321106e-005;
 				};
 				class Item27
 				{
@@ -13401,7 +13409,7 @@ class Mission
 					};
 					id=958;
 					type="Barrel4";
-					atlOffset=0.0052595139;
+					atlOffset=-9.6321106e-005;
 				};
 				class Item28
 				{
@@ -13541,7 +13549,7 @@ class Mission
 				};
 			};
 			id=959;
-			atlOffset=-0.083714485;
+			atlOffset=-0.083747864;
 		};
 		class Item9
 		{
@@ -18559,36 +18567,6 @@ class Mission
 			name="marker_4";
 			type="b_hq";
 			id=2398;
-		};
-		class Item21
-		{
-			dataType="Group";
-			side="West";
-			class Entities
-			{
-				items=1;
-				class Item0
-				{
-					dataType="Object";
-					class PositionInfo
-					{
-						position[]={4345.8213,7.0337019,5082.5903};
-					};
-					side="West";
-					flags=7;
-					class Attributes
-					{
-					};
-					id=2400;
-					type="B_crew_F";
-					atlOffset=-3.2901764e-005;
-				};
-			};
-			class Attributes
-			{
-			};
-			id=2399;
-			atlOffset=-3.2901764e-005;
 		};
 	};
 	class Connections
